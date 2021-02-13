@@ -1,0 +1,45 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 11;
+
+  div.container {
+    padding: 0.5rem 0;
+  }
+}
+.song-footer {
+  display: flex;
+  align-items: center;
+
+  .song__avatar > img {
+    width: 2rem;
+    height: 2rem;
+
+    border-radius: 50%;
+  }
+
+  .song__details__name {
+    margin-left: 0.75rem;
+
+    p {
+      color: #fff;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    p:hover {
+      text-decoration: underline;
+    }
+  
+    .song__singer__name {
+      font-size: 14px;
+      color: rgba($color: #fff, $alpha: 0.4);
+      font-weight: 700;
+    }
+  }
+}
+
+.player {
+  display: flex;
+  align-items: center;
+}

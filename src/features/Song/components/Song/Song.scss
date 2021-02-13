@@ -1,7 +1,6 @@
 $song: '.song';
 
 .song {
-  
   width: 12rem;
   margin-bottom: 0.5rem;
   margin-right: 0.5rem;
@@ -54,6 +53,7 @@ $song: '.song';
       margin-left: 0.75rem;
 
       p {
+        color: #fff;
         margin-bottom: 0;
         cursor: pointer;
       }

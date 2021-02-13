@@ -1,4 +1,10 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  background-color: #242526;
+
   & > div.row {
     margin: 0;
   }

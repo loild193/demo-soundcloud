@@ -1,15 +1,16 @@
 .main-page {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   
-  padding: 1rem;
+  padding: 5rem 0 3rem 0;
 
-  background-color: rgba($color: #593d88, $alpha: 0.6);
   color: #fff;
 }
 
 @media (max-width: 767.98px) { 
   .main-page {
     padding: 0;
+    padding-top: 8rem;
   }
 }
