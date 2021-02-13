@@ -1,0 +1,15 @@
+.main-page {
+  display: flex;
+  flex-wrap: wrap;
+  
+  padding: 1rem;
+
+  background-color: rgba($color: #593d88, $alpha: 0.6);
+  color: #fff;
+}
+
+@media (max-width: 767.98px) { 
+  .main-page {
+    padding: 0;
+  }
+}

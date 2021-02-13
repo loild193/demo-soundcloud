@@ -1,0 +1,101 @@
+$song: '.song';
+
+.song {
+  
+  width: 12rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+
+  &__photo {
+    background-image: url("https://i1.sndcdn.com/artworks-000041124475-2lu7vg-t300x300.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 12rem;
+    width: 100%;
+
+    cursor: pointer;
+
+    &__overlay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: 100%;
+      background-color: rgba($color: #000000, $alpha: 0.6);
+      
+      visibility: hidden;
+      transition: all 0.15s ease-in-out 0s;
+    }
+
+    #{$song}__icon__play {
+      color: #fff;
+    }
+  }
+
+  &:hover &__photo__overlay {
+    visibility: visible;
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+
+    margin-top: 0.25rem;
+
+    #{$song}__singer__photo > img {
+      width: 2rem;
+      height: 2rem;
+
+      border-radius: 50%;
+    }
+    &__name {
+      margin-left: 0.75rem;
+
+      p {
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+      p:hover {
+        text-decoration: underline;
+      }
+
+      p.singer__name {
+        font-size: 14px;
+        color: rgba($color: #fff, $alpha: 0.4);
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .song {
+    flex: 2;
+    display: flex;
+    align-items: center;
+
+    height: 4rem;
+    width: 100%;
+    padding: 0 1rem;
+    margin-bottom: 0;
+
+    border-bottom: 1px solid rgb(126, 126, 126);
+
+    &__photo {
+      height: 3rem;
+      width: 3rem;
+    }
+
+    &:hover &__photo__overlay {
+      visibility: visible;
+    }
+
+    &__details {
+      #{$song}__singer__photo {
+        display: none;
+      }
+    }
+  }
+}
