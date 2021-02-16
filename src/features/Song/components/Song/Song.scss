@@ -6,9 +6,10 @@ $song: '.song';
   margin-right: 0.5rem;
 
   &__photo {
-    background-image: url("https://i1.sndcdn.com/artworks-000041124475-2lu7vg-t300x300.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: 50%;
+    background-color: #222;
 
     height: 12rem;
     width: 100%;
@@ -40,6 +41,7 @@ $song: '.song';
   &__details {
     display: flex;
     align-items: center;
+    overflow: hidden;
 
     margin-top: 0.25rem;
 
@@ -51,11 +53,16 @@ $song: '.song';
     }
     &__name {
       margin-left: 0.75rem;
+      overflow: hidden;
 
       p {
         color: #fff;
         margin-bottom: 0;
         cursor: pointer;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       p:hover {
         text-decoration: underline;

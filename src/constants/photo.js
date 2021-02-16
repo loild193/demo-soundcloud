@@ -1,0 +1,1 @@
+export const size = '-t300x300';
