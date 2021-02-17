@@ -1,39 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import songAPI from '../../api/songAPI';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import MainPage from './page/Main';
-import { saveSong } from './songSlice';
-
+import { changePauseSong, setSongPlaying } from './songSlice';
 function Songs(props) {
-  const [songs, setSongs] = useState([]);
+  const songs = useSelector(state => state.songs.songs);
+  const idSongPlaying = useSelector(state => state.songs.playingSong.idSongPlaying);
+  const isPause = useSelector(state => state.songs.playingSong.isPause);
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        const response = await songAPI.getRandomSongs();
-        dispatch(saveSong(response));
-        setSongs(response);
-      } catch (error) {
-        console.log(error);
-      }
-    }
 
-    fetchSongs();
-  }, [dispatch]);
+  const handlePlaySong = (id) => {
+    id !== idSongPlaying && dispatch(setSongPlaying(id));
+    dispatch(changePauseSong(false));
+  }
+  
+  const handlePauseSong = () => {
+    dispatch(changePauseSong(true));
+  }
 
   return (
     <div className="container-fluid" style={{backgroundColor: "#433360"}}>
       <div className="container">
-        <MainPage songs={songs}/>
+        <MainPage 
+          songs={songs}
+          idSongPlaying={idSongPlaying}
+          isPause={isPause}
+          onClickPlaySong={handlePlaySong}
+          onClickPauseSong={handlePauseSong}
+        />
       </div>
     </div>
   )
 }
 
-Songs.propTypes = {
-
-}
+Songs.propTypes = {}
 
 export default Songs
 

@@ -3,17 +3,38 @@ import React from 'react';
 import { size } from '../../../../constants/photo';
 import './Song.scss';
 
+const classNames = require('classnames');
 function Song(props) {
-  const { song } = props;
-  console.log(song);
+  const { song, idSongPlaying, isPause, onPlaySong, onPauseSong } = props;
   const {artwork_url, user, title} = song;
   const artwork_url_newSize = artwork_url && artwork_url.replace('-large', size);
   
+  const handlePlaySong = (song) => {
+    onPlaySong && onPlaySong(song.id);
+  }
+  const handlePauseSong = () => {
+    onPauseSong && onPauseSong();
+  }
+
   return (
     <div className="song">
-      <div className="song__photo" style={{backgroundImage: `url(${artwork_url_newSize})`}}>
-        <div className="song__photo__overlay">
-          <i className="song__icon__play fas fa-play" />
+      <div 
+        className="song__photo" 
+        style={{backgroundImage: `url(${artwork_url_newSize})`}}
+      >
+        <div className={classNames({playing: song.id === idSongPlaying, song__photo__overlay: true})}>
+          {
+            isPause === false ? 
+            <i 
+              className="song__icon__pause far fa-pause-circle fa-2x" 
+              onClick={handlePauseSong}
+            />
+            :
+            <i 
+              className="song__icon__play far fa-play-circle fa-2x" 
+              onClick={() => handlePlaySong(song)}
+            />
+          }
         </div>
       </div>
 
@@ -36,9 +57,17 @@ function Song(props) {
 
 Song.propTypes = {
   song: PropTypes.object.isRequired,
+  idSongPlaying: PropTypes.number,
+  isPause: PropTypes.bool,
+  onPlaySong: PropTypes.func,
+  onPauseSong: PropTypes.func,
 }
 Song.defaultProps = {
   song: {},
+  idSongPlaying: null,
+  isPause: false,
+  onPlaySong: null,
+  onPauseSong: null,
 }
 
 export default Song

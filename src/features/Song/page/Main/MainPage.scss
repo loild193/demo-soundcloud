@@ -1,9 +1,13 @@
+.footer-none {
+  padding: 5rem 0 1rem 0 !important;
+}
+
 .main-page {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   
-  padding: 5rem 0 3rem 0;
+  padding: 5rem 0;
 
   color: #fff;
 }
@@ -12,5 +16,13 @@
   .main-page {
     padding: 0;
     padding-top: 8rem;
+
+    &__wrapper {
+      width: 100%;
+    }
+  }
+
+  .footer-none {
+    padding-top: 8rem !important;
   }
 }

@@ -1,8 +1,19 @@
+.footer-appear--active{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   z-index: 11;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out 0s;
+
+  background-color: #242526;
 
   div.container {
     padding: 0.5rem 0;
@@ -11,6 +22,7 @@
 .song-footer {
   display: flex;
   align-items: center;
+  overflow: hidden;
 
   .song__avatar > img {
     width: 2rem;
@@ -21,11 +33,16 @@
 
   .song__details__name {
     margin-left: 0.75rem;
+    overflow: hidden;
 
     p {
       color: #fff;
       margin-bottom: 0;
       cursor: pointer;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     p:hover {
       text-decoration: underline;
@@ -42,4 +59,8 @@
 .player {
   display: flex;
   align-items: center;
+
+  audio {
+    height: 3rem;
+  }
 }
