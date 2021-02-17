@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
+import Loading from '../../../../components/Loading';
 import Song from '../../components/Song';
 import './MainPage.scss';
 
@@ -18,7 +20,12 @@ function MainPage(props) {
     <div className={classNames({ "main-page": true, "footer-none": !idSongPlaying })}>
       {
         songs.map((song) => (
-          <div key={song.id} className="main-page__wrapper">
+          <LazyLoad 
+            key={song.id} 
+            className="main-page__wrapper"
+            offset={[-100, 100]}
+            placeholder={<Loading />}
+          >
             <Song 
               song={song}
               idSongPlaying={idSongPlaying}
@@ -26,7 +33,7 @@ function MainPage(props) {
               onPlaySong={handlePlaySong}
               onPauseSong={handlePauseSong}
             />
-          </div>
+          </LazyLoad>
         ))
       }
     </div>

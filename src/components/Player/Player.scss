@@ -20,6 +20,7 @@
   }
 }
 .song-footer {
+  flex: 1 1;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -57,10 +58,25 @@
 }
 
 .player {
+  flex: 1 1;
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
 
   audio {
-    height: 3rem;
+    width: 14rem;
+    height: 2.5rem;
+  }
+
+  &__utils {
+    i {
+      color: #fff;
+      opacity: 0.4;
+      cursor: pointer;
+    }
+
+    i.active {
+      opacity: 1;
+    }
   }
 }

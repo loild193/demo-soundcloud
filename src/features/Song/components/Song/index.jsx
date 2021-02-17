@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
+import Loading from '../../../../components/Loading';
 import { size } from '../../../../constants/photo';
 import './Song.scss';
 
@@ -18,13 +20,15 @@ function Song(props) {
 
   return (
     <div className="song">
-      <div 
+      <LazyLoad 
         className="song__photo" 
         style={{backgroundImage: `url(${artwork_url_newSize})`}}
+        placeholder={<Loading />}
+        once={true}
       >
         <div className={classNames({playing: song.id === idSongPlaying, song__photo__overlay: true})}>
           {
-            isPause === false ? 
+            song.id === idSongPlaying && isPause === false ? 
             <i 
               className="song__icon__pause far fa-pause-circle fa-2x" 
               onClick={handlePauseSong}
@@ -36,15 +40,20 @@ function Song(props) {
             />
           }
         </div>
-      </div>
+      </LazyLoad>
 
       <div className="song__details">
-        <div className="song__singer__photo">
-          <img 
-            src={user.avatar_url} 
-            alt="Singer's avatar"
-          />
-        </div>
+        <LazyLoad
+          once={true}
+          placeholder={<Loading />}  
+        >
+          <div className="song__singer__photo">
+            <img 
+              src={user.avatar_url} 
+              alt="Singer's avatar"
+            />
+          </div>
+        </LazyLoad>
 
         <div className="song__details__name">
           <p className="song__name" title={title}>{title}</p>

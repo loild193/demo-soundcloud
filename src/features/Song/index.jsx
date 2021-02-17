@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../../components/Loading';
 import MainPage from './page/Main';
 import { changePauseSong, setSongPlaying } from './songSlice';
 function Songs(props) {
@@ -27,6 +28,7 @@ function Songs(props) {
           onClickPlaySong={handlePlaySong}
           onClickPauseSong={handlePauseSong}
         />
+        <Loading />
       </div>
     </div>
   )

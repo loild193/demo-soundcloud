@@ -13,7 +13,12 @@ const songSlice = createSlice({
   initialState,
   reducers: {
     saveSong: (state, action) => {
-      state.songs = action.payload;
+      if (state.songs === []) {
+        state.songs = action.payload;
+      }
+      else {
+        state.songs.push(...action.payload);
+      }
     },
     setSongPlaying: (state, action) => {
       state.playingSong.idSongPlaying = action.payload;

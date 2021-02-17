@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactAudioPlayer from 'react-audio-player'
 import { useDispatch, useSelector } from 'react-redux';
 import { size } from '../../constants/photo';
@@ -12,13 +12,22 @@ function Player(props) {
   const isPause = useSelector(state => state.songs.playingSong.isPause);
   const dispatch = useDispatch();
 
+  const [loop, setLoop] = useState(false);
   const audioRef = useRef(null);
+
+  useEffect(() => {
+    setLoop(false);
+  }, [idSongPlaying]);
 
   if (isPause === true) {
     audioRef.current && audioRef.current.audioEl.current.pause();
   }
-  else {
-    audioRef.current && audioRef.current.audioEl.current.play();
+  else if (isPause === false){
+    try {
+      audioRef.current && audioRef.current.audioEl.current.play();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handlePauseSong = () => {
@@ -49,6 +58,7 @@ function Player(props) {
             ref={audioRef}
             autoPlay
             controls
+            loop={loop}
             onPause={handlePauseSong}
             // src={
             //   songPlaying && 
@@ -57,7 +67,10 @@ function Player(props) {
             src="https://p.scdn.co/mp3-preview/7333d894663eecf060ef065cacd9cdb05813e770?cid=774b29d4f13844c495f206cafdad9c86"
           />
           <div className="player__utils">
-            <i className="player__utils--loop fas fa-sync-alt" />
+            <i 
+              className={classNames({"player__utils--loop fas fa-sync-alt": true, "active": loop})} 
+              onClick={() => setLoop(!loop)}
+            />
           </div>
         </div>
       </div>
