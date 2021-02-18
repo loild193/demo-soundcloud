@@ -32,16 +32,27 @@
       font-size: 16px;
       line-height: 34px;
 
+      width: 100%;
       padding-left: 0.75rem;
     }
     &__input:focus {
       outline: none;
     }
 
-    &__icon {
-      order: 1;
+    i {
       color: #f5f6f7;
       cursor: pointer;
+    }
+
+    &--search {
+      order: 1;
+    }
+    &--clear {
+      order: 3;
+      opacity: 0.4;
+    }
+    &--clear:hover {
+      opacity: 1;
     }
   }
 }
