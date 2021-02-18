@@ -64,7 +64,7 @@
   justify-content: space-evenly;
 
   audio {
-    width: 14rem;
+    width: 16rem;
     height: 2.5rem;
   }
 
@@ -73,10 +73,30 @@
       color: #fff;
       opacity: 0.4;
       cursor: pointer;
+
+      margin: 0 0.25rem;
     }
 
     i.active {
       opacity: 1;
+    }
+
+    &--back:hover, &--next:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .player {
+    flex: 2 1;
+
+    audio {
+      width: 14rem;
+    }
+
+    i {
+      margin: 0 0.5rem;
     }
   }
 }

@@ -1,24 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import songAPI from './api/songAPI';
 import './App.css';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Player from './components/Player';
+import throttle from './constants/optimize';
 import Songs from './features/Song';
 import { saveSong } from './features/Song/songSlice';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const timeCall = useRef(0);
-
+  const nextHrefGetSong = useSelector(state => state.songs.next_href);
   const dispatch = useDispatch();
   
-  const fetchSongs = async () => {
-    timeCall.current += 1;
+  const fetchSongs = async (link) => {
     try {
-      const response = await songAPI.getRandomSongs(timeCall.current);
-      dispatch(saveSong(response));
+      const response = await songAPI.getRandomSongs(link ? link : "first");
+      if (response) {
+        dispatch(saveSong(response));
+      }
+      else {
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -31,9 +35,8 @@ function App() {
   }, []);
 
   window.onscroll = function(ev) {
-    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 5) {
-      console.log("bottom of page")
-      fetchSongs();
+    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 0.5) {
+      throttle(fetchSongs(nextHrefGetSong), 500);
     }
   };
   

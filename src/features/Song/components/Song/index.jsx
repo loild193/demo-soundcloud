@@ -43,17 +43,17 @@ function Song(props) {
       </LazyLoad>
 
       <div className="song__details">
-        <LazyLoad
+        {/* <LazyLoad
           once={true}
           placeholder={<Loading />}  
-        >
+        > */}
           <div className="song__singer__photo">
             <img 
               src={user.avatar_url} 
               alt="Singer's avatar"
             />
           </div>
-        </LazyLoad>
+        {/* </LazyLoad> */}
 
         <div className="song__details__name">
           <p className="song__name" title={title}>{title}</p>

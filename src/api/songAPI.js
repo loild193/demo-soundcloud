@@ -2,20 +2,28 @@ import axiosClient from "./axiosClient";
 
 // const randomCharacter = Math.random().toString(36).substring(2, 3);
 const songAPI = {
-  getRandomSongs: (timeCall) => {
-    // const { REACT_APP_CLIENT_ID } = process.env;
+  getRandomSongs: (next_href) => {
     const url = '/tracks';
     const params = { 
       client_id: process.env.REACT_APP_CLIENT_ID,
-      q: "binz",
-      limit: 25,
-      offset: 25 * timeCall,
+      q: "rap",
+      limit: 50,
+      linked_partitioning: 1,
     }
     // return new Promise((resolve, reject) => {
     //   axiosClient.get(url, { params });
     //   resolve()
     // });
-    return axiosClient.get(url, { params });
+    if (next_href !== "first") {
+      return axiosClient.get(next_href);
+    } 
+    else if (next_href === "first"){
+      return axiosClient.get(url, { params });
+    }
+    else {
+      // next_href === null
+      return;
+    }
   }
 };
 
