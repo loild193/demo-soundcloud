@@ -15,11 +15,20 @@ function Header(props) {
     searchInputRef.current.value = "";
   }
 
+  const handleGoHomePage = () => {
+    window.location.href = '/';
+  }
+
   return (
     <div className="header container-fluid p-3">
       <div className="container">
         <div className="row">
-          <h3 className="col-md-6 header__title">Soundcloud</h3>
+          <h3 
+            className="col-md-6 header__title"
+            onClick={handleGoHomePage}
+          >
+          Soundcloud
+          </h3>
 
           <div className="col-md-6 header__search">
             <i 
