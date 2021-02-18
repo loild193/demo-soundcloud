@@ -1,12 +1,12 @@
-function throttle(fn, delay) {
+function debounce(fn, delay) {
   return args => {
-    if (fn.id) return
+    clearTimeout(fn.id);
+
     fn.id = setTimeout(() => {
-      fn.call(this, args);
-      clearTimeout(fn.id);
-      fn.id = null;
+        fn.call(this, args)
     }, delay);
   }
 }
 
-export default throttle;
+export const initialSearchWord = "rap";
+export default debounce;

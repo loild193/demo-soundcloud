@@ -4,7 +4,7 @@ function Loading(props) {
   return (
     <div style={{
       textAlign: "center",
-      marginTop: "3rem",
+      margin: "3rem 0",
       padding: "2rem"
       }}
     >

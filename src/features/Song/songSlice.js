@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const removeDuplicateValue = (array) => {
   return array.filter(
@@ -13,6 +13,7 @@ const initialState = {
     idSongPlaying: null,
     isPause: null, // null: not play yet, false: is playing, true: is pause
   },
+  isContinuedSearchSong: null,
 };
 
 const songSlice = createSlice({
@@ -20,7 +21,12 @@ const songSlice = createSlice({
   initialState,
   reducers: {
     saveSong: (state, action) => {
-      state.songs = removeDuplicateValue([...state.songs, ...action.payload.collection]);
+      if (state.isContinuedSearchSong === false) {
+        state.songs = action.payload.collection;
+      }
+      else {
+        state.songs = removeDuplicateValue([...state.songs, ...action.payload.collection]);
+      }
       state.next_href = action.payload.next_href;
     },
     setSongPlaying: (state, action) => {
@@ -28,11 +34,16 @@ const songSlice = createSlice({
     },
     changePauseSong: (state, action) => {
       state.playingSong.isPause = action.payload;
+    },
+    changeIsContinuedSearchSong: (state, action) => {
+      state.isContinuedSearchSong = action.payload;
     }
   },
 });
 
 const { actions, reducer } = songSlice;
-export const { saveSong, setSongPlaying, changePauseSong } = actions;
+export const { 
+  saveSong, setSongPlaying, changePauseSong, changeIsContinuedSearchSong,
+} = actions;
 export default reducer;
 
