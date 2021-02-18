@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../components/Loading';
 import MainPage from './page/Main';
 import { changePauseSong, setSongPlaying } from './songSlice';
 function Songs(props) {
+  const { loading } = props;
   const songs = useSelector(state => state.songs.songs);
   const idSongPlaying = useSelector(state => state.songs.playingSong.idSongPlaying);
   const isPause = useSelector(state => state.songs.playingSong.isPause);
@@ -28,13 +30,20 @@ function Songs(props) {
           onClickPlaySong={handlePlaySong}
           onClickPauseSong={handlePauseSong}
         />
-        <Loading />
+        {
+          loading !== null && <Loading />
+        }
       </div>
     </div>
   )
 }
 
-Songs.propTypes = {}
+Songs.propTypes = {
+  loading: PropTypes.string,
+}
+Songs.defaultProps = {
+  loading: null,
+}
 
 export default Songs
 

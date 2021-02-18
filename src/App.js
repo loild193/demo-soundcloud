@@ -5,7 +5,7 @@ import './App.css';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Player from './components/Player';
-import { initialSearchWord } from './constants/optimize';
+import debounce, { initialSearchWord } from './constants/optimize';
 import Songs from './features/Song';
 import { saveSong, changeIsContinuedSearchSong } from './features/Song/songSlice';
 
@@ -22,6 +22,7 @@ function App() {
       console.log(error);
     }
   }
+  const debounceFetchSongs = debounce(fetchSongs, 700);
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,8 +32,8 @@ function App() {
 
   window.onscroll = function(ev) {
     if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 0.5) {
-      dispatch(changeIsContinuedSearchSong(true));
-      fetchSongs(nextHrefGetSong);
+      dispatch(changeIsContinuedSearchSong(true));    
+      nextHrefGetSong &&  debounceFetchSongs(nextHrefGetSong);
     }
   };
 
@@ -45,7 +46,7 @@ function App() {
     <div className="App">
       <Header onSearch={handleSearch} />
       {
-        isLoading ? <Loading /> : <Songs />
+        isLoading ? <Loading /> : <Songs loading={nextHrefGetSong}/>
       }
       <Player />
     </div>
