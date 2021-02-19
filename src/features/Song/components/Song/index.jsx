@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import LazyLoad from 'react-lazyload';
-import Loading from '../../../../components/Loading';
 import { size } from '../../../../constants/photo';
 import './Song.scss';
 
 const classNames = require('classnames');
 function Song(props) {
-  const { song, idSongPlaying, isPause, onPlaySong, onPauseSong } = props;
+  const { 
+    playlist, song, idSongPlaying, isPause, 
+    onPlaySong, onPauseSong,
+    onAddSong, onRemoveSong, 
+  } = props;
   const {artwork_url, user, title} = song;
   const artwork_url_newSize = artwork_url && artwork_url.replace('-large', size);
   
@@ -18,13 +20,19 @@ function Song(props) {
     onPauseSong && onPauseSong();
   }
 
+  const handleAddSong = (song) => {
+    onAddSong && onAddSong(song);
+  }
+
+  const handleRemoveSong = (song) => {
+    onRemoveSong && onRemoveSong(song);
+  }
+
   return (
     <div className="song">
-      <LazyLoad 
+      <div 
         className="song__photo" 
         style={{backgroundImage: `url(${artwork_url_newSize})`}}
-        placeholder={<Loading />}
-        once={true}
       >
         <div className={classNames({playing: song.id === idSongPlaying, song__photo__overlay: true})}>
           {
@@ -39,21 +47,28 @@ function Song(props) {
               onClick={() => handlePlaySong(song)}
             />
           }
+          {
+            playlist.findIndex(track => track.id === song.id) === -1 ?
+            <i 
+              className="song__icon__add fas fa-plus-circle fa-2x" 
+              onClick={() => handleAddSong(song)}
+            />
+            :
+            <i 
+              className="song__icon__remove fas fa-minus-circle fa-2x" 
+              onClick={() => handleRemoveSong(song)}
+            />
+          }
         </div>
-      </LazyLoad>
+      </div>
 
       <div className="song__details">
-        {/* <LazyLoad
-          once={true}
-          placeholder={<Loading />}  
-        > */}
-          <div className="song__singer__photo">
-            <img 
-              src={user.avatar_url} 
-              alt="Singer's avatar"
-            />
-          </div>
-        {/* </LazyLoad> */}
+        <div className="song__singer__photo">
+          <img 
+            src={user.avatar_url} 
+            alt="Singer's avatar"
+          />
+        </div>
 
         <div className="song__details__name">
           <p className="song__name" title={title}>{title}</p>
@@ -65,18 +80,26 @@ function Song(props) {
 }
 
 Song.propTypes = {
+  playlist: PropTypes.array,
   song: PropTypes.object.isRequired,
   idSongPlaying: PropTypes.number,
   isPause: PropTypes.bool,
   onPlaySong: PropTypes.func,
   onPauseSong: PropTypes.func,
+
+  onAddSong: PropTypes.func,
+  onRemoveSong: PropTypes.func,
 }
 Song.defaultProps = {
+  playlist: [],
   song: {},
   idSongPlaying: null,
   isPause: false,
   onPlaySong: null,
   onPauseSong: null,
+
+  onAddSong: null,
+  onRemoveSong: null,
 }
 
 export default Song

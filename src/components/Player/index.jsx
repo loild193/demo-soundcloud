@@ -14,17 +14,30 @@ function Player(props) {
   const idSongPlaying = useSelector(state => state.songs.playingSong.idSongPlaying);
   const songs = useSelector(state => state.songs.songs);
   const isPause = useSelector(state => state.songs.playingSong.isPause);
+  
+  const playlist = useSelector(state => state.songs.playlist);
+  const isPlayList = useSelector(state => state.songs.isPlayList);
   const dispatch = useDispatch();
 
   const [loop, setLoop] = useState(false);
   const [shuffle, setShuffle] = useState(false);
   const [songPlay, setSongPlay] = useState(null);
+  const [playTracks, setPlayTracks] = useState([]);
   const audioRef = useRef(null);
 
   useEffect(() => {
+    if (isPlayList && playlist.findIndex(track => track.id === idSongPlaying) !== -1) {
+      setPlayTracks(playlist);
+    }
+    else if (!isPlayList && playlist.findIndex(track => track.id === idSongPlaying) === -1) {
+      setPlayTracks(songs)
+    }
+  }, [isPlayList, playlist, songs, idSongPlaying])
+
+  useEffect(() => {
     setLoop(false);
-    setSongPlay(songs.find(song => song.id === idSongPlaying));
-  }, [idSongPlaying, songs]);
+    setSongPlay(playTracks.find(song => song.id === idSongPlaying));
+  }, [idSongPlaying, playTracks]);
 
   if (isPause === true) {
     audioRef.current && audioRef.current.audioEl.current.pause();
@@ -44,26 +57,32 @@ function Player(props) {
   }
 
   const changeSong = (indexSongPlay) => {
-    if (indexSongPlay >= 0 && indexSongPlay < songs.length) {
-      setSongPlay(songs[indexSongPlay]);
-      dispatch(setSongPlaying(songs[indexSongPlay].id));
+    if (indexSongPlay >= 0 && indexSongPlay < playTracks.length) {
+      setSongPlay(playTracks[indexSongPlay]);
+      dispatch(setSongPlaying(playTracks[indexSongPlay].id));
       dispatch(changePauseSong(false));
     }
   }
   const handleEnded = () => {
     let indexSongPlay;
     shuffle ?
-      indexSongPlay = randomSongIndex(songs.length)
+      indexSongPlay = randomSongIndex(playTracks.length)
       :
-      indexSongPlay = songs.findIndex(song => song.id === idSongPlaying) + 1;
+      indexSongPlay = playTracks.findIndex(song => song.id === idSongPlaying) + 1;
       
     changeSong(indexSongPlay);
   }
   const handleBackSong = () => {
-    changeSong(songs.findIndex(song => song.id === idSongPlaying) - 1);
+    changeSong(playTracks.findIndex(song => song.id === idSongPlaying) - 1);
   }
   const handleNextSong = () => {
-    changeSong(songs.findIndex(song => song.id === idSongPlaying) + 1);
+    let indexSongPlay;
+    shuffle ? 
+    indexSongPlay = randomSongIndex(playTracks.length)
+    :
+    indexSongPlay = playTracks.findIndex(song => song.id === idSongPlaying) + 1;
+
+    changeSong(indexSongPlay);
   }
 
   return (
@@ -113,7 +132,7 @@ function Player(props) {
             />
             <i 
               className={classNames({"player__utils--loop fas fa-sync-alt": true, "active": loop})} 
-              title="Repeat"
+              title="Replay one"
               onClick={() => setLoop(!loop)}
             />
             <i

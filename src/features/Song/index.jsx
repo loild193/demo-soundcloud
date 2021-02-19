@@ -1,15 +1,23 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Loading from '../../components/Loading';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import NotFound from '../../components/NotFound';
 import MainPage from './page/Main';
-import { changePauseSong, setSongPlaying } from './songSlice';
+import Playlist from './page/Playlist';
+import { addToPlayList, changeIsPlaylist, changePauseSong, removeFromPlaylist, setSongPlaying } from './songSlice';
 function Songs(props) {
   const { loading } = props;
   const songs = useSelector(state => state.songs.songs);
+  const playlist = useSelector(state => state.songs.playlist);
   const idSongPlaying = useSelector(state => state.songs.playingSong.idSongPlaying);
   const isPause = useSelector(state => state.songs.playingSong.isPause);
   const dispatch = useDispatch();
+  const match = useRouteMatch();
+
+  useEffect(() => {
+    dispatch(changeIsPlaylist(false));
+  }, [dispatch]);
 
   const handlePlaySong = (id) => {
     id !== idSongPlaying && dispatch(setSongPlaying(id));
@@ -20,19 +28,42 @@ function Songs(props) {
     dispatch(changePauseSong(true));
   }
 
+  const handleAddToPlaylist = (song) => {
+    dispatch(addToPlayList(song));
+  }
+
+  const handleRemoveFromPlaylist = (song) => {
+    dispatch(removeFromPlaylist(song));
+  }
+
   return (
     <div className="container-fluid" style={{backgroundColor: "#433360"}}>
       <div className="container">
-        <MainPage 
-          songs={songs}
-          idSongPlaying={idSongPlaying}
-          isPause={isPause}
-          onClickPlaySong={handlePlaySong}
-          onClickPauseSong={handlePauseSong}
-        />
-        {
-          loading !== null && <Loading />
-        }
+        <Switch>
+          <Route 
+            exact 
+            path={match.url} 
+            render={() => 
+              <MainPage 
+                songs={songs}
+                playlist={playlist}
+                idSongPlaying={idSongPlaying}
+                isPause={isPause}
+                loading={loading}
+                onClickPlaySong={handlePlaySong}
+                onClickPauseSong={handlePauseSong}
+
+                onClickAddSong={handleAddToPlaylist}
+                onClickRemoveSong={handleRemoveFromPlaylist}
+              />
+            }
+          />
+          <Route 
+            path={`${match.url}/playlist`}
+            component={Playlist}
+          />
+          <Route component={NotFound} />
+        </Switch>
       </div>
     </div>
   )

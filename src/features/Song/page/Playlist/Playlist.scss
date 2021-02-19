@@ -1,0 +1,49 @@
+$song: '.song';
+
+.playlist {
+  padding-top: 7rem;
+  color: #fff;
+
+  &__track--right {
+    .song {
+      flex: 2;
+      display: flex;
+      align-items: center;
+  
+      height: 4rem;
+      width: 100%;
+      padding: 0 1rem;
+      margin-bottom: 0;
+  
+      border-bottom: 1px solid rgb(126, 126, 126);
+  
+      &__photo {
+        height: 3rem;
+        width: 3rem;
+  
+        i {
+          font-size: 1em;
+        }
+      }
+  
+      &:hover &__photo__overlay {
+        visibility: visible;
+        opacity: 1;
+      }
+  
+      &__details {
+        #{$song}__singer__photo {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .playlist {
+    padding-top: 9rem;
+
+    
+  }
+}

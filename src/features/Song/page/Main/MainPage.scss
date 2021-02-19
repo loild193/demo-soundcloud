@@ -1,5 +1,5 @@
 .footer-none {
-  padding: 5rem 0 1rem 0 !important;
+  padding: 6rem 0 1rem 0 !important;
 }
 
 .main-page {
@@ -7,7 +7,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   
-  padding: 5rem 0;
+  padding: 7rem 0;
 
   color: #fff;
 }
@@ -15,7 +15,7 @@
 @media (max-width: 767.98px) { 
   .main-page {
     padding: 0;
-    padding-top: 8rem;
+    padding-top: 9rem;
 
     &__wrapper {
       width: 100%;
@@ -23,6 +23,6 @@
   }
 
   .footer-none {
-    padding-top: 8rem !important;
+    padding-top: 9rem !important;
   }
 }
